@@ -1,0 +1,34 @@
+import pandas as pd
+import numpy as np
+from sklearn import linear_model
+import matplotlib.pyplot as plt
+df=pd.read_csv("C:\BigData\canada_per_capita_income.csv")
+print(df)
+plt.xlabel("year")
+plt.ylabel("per capita income")
+plt.scatter(df.year,df.percapitaincome, color = "Blue", marker = "*")
+plt.show()
+
+#dropping per capita income column because when we fit the linear model it expects a 2D array
+new_df=df.drop("percapitaincome",axis=1)
+print("###################")
+print(new_df)
+
+#making an instance of LinerRegression class
+model=linear_model.LinearRegression()
+
+#to train the model use fit method with  year and per capita income
+model.fit(new_df,df.percapitaincome)
+
+#Let's predict the per capita income of year 2015, predict function expects 2D array
+print("Predicted value")
+
+print("predict:",model.predict([[2014]]))
+print("coef:",model.coef_)
+print("intercept:",model.intercept_)
+
+
+#applying simple linear regression formula y=mx+c
+z=828.46507522*2014+(-1632210.7578554575)
+
+print("With formula:",z)
