@@ -1,0 +1,37 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+#to range the values between zero and one MinMaxScalaer is needed
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.tree import DecisionTreeClassifier
+#READ DATASET
+df=pd.read_csv("D:/SUPRITHA/Social_Network_Ads.csv")
+print(df)
+X=df[['Age','EstimatedSalary']]
+print(X)
+Y=df['Purchased']
+print(Y)
+#split dataset into X_train X_test,y_train and y_test
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train,Y_test=train_test_split(X,Y,test_size=0.25)
+print(X_train.shape, Y_train.shape, X_test.shape, Y_test.shape)
+
+#feature scaling
+SS=MinMaxScaler()
+SS.fit(X_train)
+X_train_scaled=SS.transform(X_train)
+SS.fit(X_test)
+X_test_scaled=SS.transform(X_test)
+
+
+#implement decision tree
+Model_DT=DecisionTreeClassifier()
+#fit is for training the model
+Model_DT.fit(X_train_scaled, Y_train)
+Y_predict=Model_DT.predict(X_test_scaled)
+plt.scatter(X_test[Y_test==0]['Age'],X_test[Y_test==0]['EstimatedSalary'],c='red',alpha=0.7)
+
+plt.scatter(X_test[Y_test==1]['Age'],X_test[Y_test==1]['EstimatedSalary'],c='blue',alpha=0.7)
+plt.show()
+#accuracy level of the model
+print(Model_DT.score(X_test_scaled, Y_test))
