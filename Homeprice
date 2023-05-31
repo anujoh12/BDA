@@ -1,0 +1,30 @@
+import pandas as pd
+import numpy as np
+from sklearn import linear_model
+import matplotlib.pyplot as plt
+df=pd.read_csv('C:/Users/Mjohnson\Downloads//homeprices.csv')
+print(df)
+plt.xlabel('area')
+plt.ylabel('price')
+plt.scatter(df.area,df.price,color='red',marker='*')
+plt.show()
+#dropping price column bcoz when we fit the linear model it expects a 2D array 
+new_df=df.drop('price',axis=1)
+print('***********')
+print(new_df)
+#making an instance of LinearRegression class
+model=linear_model.LinearRegression()
+#to train the model use fit method with area and price
+model.fit(new_df,df.price)
+#we want to predict price of area 1500, predict function expects 2D array
+print('predicted value')
+print(model.predict([[1500]]))
+print(model.coef_)
+print(model.intercept_)
+area_df=pd.read_csv('C:/Users/Mjohnson/Downloads/area.csv')
+print(area_df)
+p=model.predict(area_df)
+area_df['prices']=p
+area_df.to_csv('C:/Users/Mjohnson/Downloads/prediction.csv')
+df=pd.read_csv('C:/Users/Mjohnson/Downloads/prediction.csv')
+print(df)
