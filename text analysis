@@ -1,0 +1,37 @@
+
+import nltk
+#sentence tokenization
+from nltk.tokenize import sent_tokenize
+text="Hello Miss.Vanita, what are you doin today k? The weather is great, and city is awesome. The sky is pinkish.blue."
+tokenized_sent=sent_tokenize(text)
+print(tokenized_sent)
+#word tokenization
+from nltk.tokenize import word_tokenize
+tokenized_word=word_tokenize(text)
+print(tokenized_word)
+#Frequency Distribution
+from nltk.probability import FreqDist
+fdist=FreqDist(tokenized_word)
+print(fdist)
+
+fdist.most_common(3)
+
+#frequency distribution plot
+import matplotlib.pyplot as plt
+fdist.plot()
+plt.show()
+
+#stopwords
+from nltk.corpus import stopwords
+stop_words=set(stopwords.words("english"))
+print(stop_words)
+
+#removing stopwords
+filtered_sent=[]
+for w in tokenized_word:
+    if w not in stop_words:
+        filtered_sent.append(w)
+print("#######")
+print(w)
+print("Tokenized sentence:",tokenized_word)
+print("Filtered sentence:",filtered_sent)
